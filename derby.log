@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Wed Nov 27 21:28:05 BRT 2013:
+ Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instância a816c00e-0142-9c1b-00ea-0000014bce38
+no diretório de banco de dados /home/karol/.geotoolkit.org/EPSG/7.09  
+
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_25-b15
+user.dir=/home/karol/workspace/TCC1
+derby.system.home=null
+Carregador de classe do banco de dados iniciado - derby.database.classpath=''
+----------------------------------------------------------------
+Wed Nov 27 21:28:06 BRT 2013:
+Encerrando a instância a816c00e-0142-9c1b-00ea-0000014bce38
