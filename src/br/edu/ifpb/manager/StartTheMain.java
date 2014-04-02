@@ -40,52 +40,61 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
 public class StartTheMain {
-	
+
 	private static String inde = "http://www.metadados.inde.gov.br/geonetwork/srv/br/csw?";
 	private static String ana = "http://metadados.ana.gov.br/geonetwork/srv/pt/csw?";
 	private static String ideandalucia = "http://www.ideandalucia.es/catalogodeservicios/srv/es/csw?";
 	private static String idee = "http://www.idee.es/csw-inspire-idee/srv/eng/csw?";
 	private static String geoportaligm = "http://www.geoportaligm.gob.ec/geonetwork/srv/es/csw?";
-	private static String aesa ="http://geo.aesa.pb.gov.br/csw?";
-	private static int count = 0 ;
-	
-	public static void main(String[] args) throws MalformedURLException, URISyntaxException, IOException, JAXBException {
+	private static String aesa = "http://geo.aesa.pb.gov.br/csw?";
+	private static int count = 0;
+
+	public static void main(String[] args) throws MalformedURLException,
+			URISyntaxException, IOException, JAXBException {
 		InformationOfCatalog informationOfCatalog = new InformationOfCatalog();
 		HandleMetadatas getMetadados = new HandleMetadatas();
-		
+
 		final MarshallerPool marshallerPool = CSWMarshallerPool.getInstance();
 		final Unmarshaller unmarshaller = marshallerPool.acquireUnmarshaller();
-		
-		///Chamada ao catalogo de serviço de uma IDE(SDI)
-		final CatalogServicesServer cswServer = new CatalogServicesServer(new URL(ideandalucia),"2.0.2");
-		
-		//Requisição do getCapabilities
-		final GetCapabilitiesRequest getCapa = cswServer.createGetCapabilities();
+
+		// /Chamada ao catalogo de serviço de uma IDE(SDI)
+		final CatalogServicesServer cswServer = new CatalogServicesServer(
+				new URL(idee),
+				"2.0.2");
+
+		// Requisição do getCapabilities
+		final GetCapabilitiesRequest getCapa = cswServer
+				.createGetCapabilities();
 		InputStream is = getCapa.getResponseStream();
 		Capabilities capabilities = (Capabilities) unmarshaller.unmarshal(is);
+
+		// Persistindo informações do catalogo no banco de dados
+		informationOfCatalog.persistsInformationFromCatalog(capabilities,
+				cswServer);
 		
-		//Persistindo informações do catalogo no banco de dados
-		informationOfCatalog.persistsInformationFromCatalog(capabilities, cswServer);
-		
-		//Requisição dos registros
+		//Exibindo na saída os dados do catalogo persistido
+		informationOfCatalog.showCatalog();
+
+		// Requisição dos registros
 		final GetRecordsRequest getRecords = cswServer.createGetRecords();
 		getRecords.setTypeNames("gmd:MD_Metadata");
 		getRecords.setConstraintLanguage("CQL");
 		getRecords.setConstraintLanguageVersion("1.1.0");
 		getRecords.setConstraint("Title like '%'");
 		is = getRecords.getResponseStream();
-		
+
 		// unmarshall a resposta
-		GetRecordsResponseType response = ((JAXBElement<GetRecordsResponseType>) unmarshaller.unmarshal(is)).getValue();
-		System.out.println("Número de resultado encontrados: " + response.getSearchResults().getNumberOfRecordsMatched());
-		
+		GetRecordsResponseType response = ((JAXBElement<GetRecordsResponseType>) unmarshaller
+				.unmarshal(is)).getValue();
+		System.out.println("Número de resultado encontrados: "
+				+ response.getSearchResults().getNumberOfRecordsMatched());
+
 		/**
 		 * retrieve results in dublin core
 		 */
 		getRecords.setResultType(ResultType.RESULTS);
 		is = getRecords.getResponseStream();
-		 
-		
+
 		/**
 		 * retrieve results in ISO 19139
 		 */
@@ -95,22 +104,24 @@ public class StartTheMain {
 		getRecords.setStartPosition(1);
 		getRecords.setMaxRecords(1);
 		is = getRecords.getResponseStream();
-		
-		while(count < response.getSearchResults().getNumberOfRecordsMatched()){
-			is = getRecords.getResponseStream();
-			
-			try{
-				
-			response = ((JAXBElement<GetRecordsResponseType>) unmarshaller.unmarshal(is)).getValue();
-			Iterator iterator = response.getSearchResults().getAny().iterator();
-			getMetadados.setInformationFromMetadados(iterator);
 
-			}catch(Exception e){
-				//e.printStackTrace();
+		while (count < response.getSearchResults().getNumberOfRecordsMatched()) {
+			is = getRecords.getResponseStream();
+
+			try {
+
+				response = ((JAXBElement<GetRecordsResponseType>) unmarshaller
+						.unmarshal(is)).getValue();
+				Iterator iterator = response.getSearchResults().getAny()
+						.iterator();
+				getMetadados.setInformationFromMetadados(iterator);
+
+			} catch (Exception e) {
+				// e.printStackTrace();
 			}
 			getRecords.setStartPosition(10 + getRecords.getStartPosition());
 			count++;
 		}
-		
+
 	}
 }

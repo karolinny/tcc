@@ -57,7 +57,7 @@ public class BuscandoServicos {
 		final Unmarshaller unmarshaller = marshallerPool.acquireUnmarshaller();
 		
 		//Chamada ao catalogo de serviço de uma IDE(SDI)
-		final CatalogServicesServer cswServer = new CatalogServicesServer(new URL(ideandalucia),"2.0.2");
+		final CatalogServicesServer cswServer = new CatalogServicesServer(new URL(geoportaligm),"2.0.2");
 		
 		//Requisição do getCapabilities
 		final GetCapabilitiesRequest getCapa = cswServer.createGetCapabilities();
@@ -103,7 +103,7 @@ public class BuscandoServicos {
 				
 			response = ((JAXBElement<GetRecordsResponseType>) unmarshaller.unmarshal(is)).getValue();
 			Iterator iterator = response.getSearchResults().getAny().iterator();
-			getMetadados.getListMetadados(iterator);
+			getMetadados.setInformationFromMetadados(iterator);
 
 			}catch(Exception e){
 				//e.printStackTrace();

@@ -28,6 +28,7 @@ public class HandleMetadatas {
 		this.wfsLayers = new WebFeatureServiceLayers();
 		this.metadataRecord = new Metadatarecord();
 		this.metadataRecordUrl = new ArrayList<Metadatarecordurl>();
+		this.crawler = new Controller();
 		this.url = null;
 		this.link = null;
 	}
