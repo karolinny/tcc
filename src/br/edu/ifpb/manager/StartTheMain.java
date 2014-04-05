@@ -49,6 +49,7 @@ public class StartTheMain {
 	private static String aesa = "http://geo.aesa.pb.gov.br/csw?";
 	private static int count = 0;
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) throws MalformedURLException,
 			URISyntaxException, IOException, JAXBException {
 		InformationOfCatalog informationOfCatalog = new InformationOfCatalog();
@@ -59,7 +60,7 @@ public class StartTheMain {
 
 		// /Chamada ao catalogo de serviço de uma IDE(SDI)
 		final CatalogServicesServer cswServer = new CatalogServicesServer(
-				new URL(idee),
+				new URL(geoportaligm),
 				"2.0.2");
 
 		// Requisição do getCapabilities
@@ -110,10 +111,8 @@ public class StartTheMain {
 
 			try {
 
-				response = ((JAXBElement<GetRecordsResponseType>) unmarshaller
-						.unmarshal(is)).getValue();
-				Iterator iterator = response.getSearchResults().getAny()
-						.iterator();
+				response = ((JAXBElement<GetRecordsResponseType>) unmarshaller.unmarshal(is)).getValue();
+				Iterator iterator = response.getSearchResults().getAny().iterator();
 				getMetadados.setInformationFromMetadados(iterator);
 
 			} catch (Exception e) {

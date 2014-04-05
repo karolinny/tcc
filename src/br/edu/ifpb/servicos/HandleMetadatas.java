@@ -16,19 +16,13 @@ public class HandleMetadatas {
 	private String url;
 	private URL link;
 	private VerifyService verifyService;
-	private WebMapServerLayers wmsLayers;
-	private WebFeatureServiceLayers wfsLayers;
-	private Controller crawler;
 	private Metadatarecord metadataRecord;
 	private List<Metadatarecordurl> metadataRecordUrl;
 	
 	public HandleMetadatas(){
 		this.verifyService = new VerifyService();
-		this.wmsLayers = new WebMapServerLayers();
-		this.wfsLayers = new WebFeatureServiceLayers();
 		this.metadataRecord = new Metadatarecord();
-		this.metadataRecordUrl = new ArrayList<Metadatarecordurl>();
-		this.crawler = new Controller();
+		this.metadataRecordUrl = new ArrayList<Metadatarecordurl>();		
 		this.url = null;
 		this.link = null;
 	}
@@ -39,7 +33,8 @@ public class HandleMetadatas {
 		
 		System.out.println("IDENTIFICAÇÃO DO METADADO: " + metadata.getFileIdentifier());
 		System.out.println("DATA DA CRIAÇÃO: " + metadata.getDateStamp());
-		System.out.println("NOME DA ORGANIZAÇÃO: " + metadata.getIdentificationInfo().iterator().next().getPointOfContacts().iterator().next().getOrganisationName().toString());
+		System.out.println("NOME DA ORGANIZAÇÃO: " + metadata.getIdentificationInfo().iterator().next().
+				                                     getPointOfContacts().iterator().next().getOrganisationName().toString());
 		System.out.println("TÍTULO: " + metadata.getIdentificationInfo().iterator().next().getCitation().getTitle().toString());
 		System.out.println("RESUMO: " + metadata.getIdentificationInfo().iterator().next().getAbstract().toString());
 		
@@ -56,13 +51,7 @@ public class HandleMetadatas {
 			
 			System.out.println("URL: " + url);
 			
-			if(verifyService.identifyService(this.url).equals("wms")){
-				this.wmsLayers.getServicoWMS(this.link);
-			}else if (verifyService.identifyService(this.url).equals("wfs")){
-				this.wfsLayers.setServicoWFS(this.link);
-			}else if(verifyService.identifyService(this.url).equals("crawler")){
-				 this.crawler.callOfCrawler(this.url);
-			}
+			verifyService.sendForServiceOrCrawler(this.url, this.link);
 		}
 	}
 		

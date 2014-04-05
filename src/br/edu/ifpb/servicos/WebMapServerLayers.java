@@ -40,7 +40,7 @@ public class WebMapServerLayers {
 	}
 
 	public void getServicoWMS(URL url) throws ServiceException, IOException {
-
+		System.out.println("to aqui");
 		WebMapServer WMS = new WebMapServer(url);
 		WMSCapabilities capabilitiesWMS = WMS.getCapabilities();
 		List<Layer> layer = capabilitiesWMS.getLayerList();
