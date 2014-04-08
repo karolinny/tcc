@@ -1,7 +1,10 @@
 package br.edu.ifpb.entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.hibernate.engine.internal.Cascade;
 
 
 /**
@@ -14,12 +17,13 @@ public class Metadatarecordurl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
 	private String url;
 
 	//bi-directional many-to-one association to Metadatarecord
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="provider")
 	private Metadatarecord metadatarecord;
 

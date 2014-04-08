@@ -74,8 +74,13 @@ public class StartTheMain {
 				cswServer);
 		
 		//Exibindo na saída os dados do catalogo persistido
+		System.out.println("==================INFORMAÇÕES DO CATÁLOGO==========================");
 		informationOfCatalog.showCatalog();
+		System.out.println("===================================================================");
+		System.out.println();
 
+		//Requisicao da camada, verificar se a seri;o j[a foi persistido
+		
 		// Requisição dos registros
 		final GetRecordsRequest getRecords = cswServer.createGetRecords();
 		getRecords.setTypeNames("gmd:MD_Metadata");
@@ -87,8 +92,10 @@ public class StartTheMain {
 		// unmarshall a resposta
 		GetRecordsResponseType response = ((JAXBElement<GetRecordsResponseType>) unmarshaller
 				.unmarshal(is)).getValue();
-		System.out.println("Número de resultado encontrados: "
-				+ response.getSearchResults().getNumberOfRecordsMatched());
+		System.out.println("===================TOTAL DE REGISTROS ENCONTRADOS===================");
+	    System.out.println(response.getSearchResults().getNumberOfRecordsMatched());
+	    System.out.println("====================================================================");
+	    System.out.println();
 
 		/**
 		 * retrieve results in dublin core
@@ -113,7 +120,7 @@ public class StartTheMain {
 
 				response = ((JAXBElement<GetRecordsResponseType>) unmarshaller.unmarshal(is)).getValue();
 				Iterator iterator = response.getSearchResults().getAny().iterator();
-				getMetadados.setInformationFromMetadados(iterator);
+				getMetadados.saveMetadata(iterator, informationOfCatalog.getCatalog());
 
 			} catch (Exception e) {
 				// e.printStackTrace();

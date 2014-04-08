@@ -42,6 +42,7 @@ public class InformationOfCatalog {
 		this.setCatalog(capabilities, cswServer);
 		this.catalogDAO.save(this.getCatalog());
 	}
+	
 
 	@Override
 	public String toString() {

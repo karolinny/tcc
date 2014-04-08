@@ -1,7 +1,9 @@
 package br.edu.ifpb.entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.sql.Timestamp;
 
 
@@ -15,6 +17,7 @@ public class Featuretype implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
 	private Timestamp begintime;
@@ -36,7 +39,7 @@ public class Featuretype implements Serializable {
 	private String update;
 
 	//bi-directional many-to-one association to Service
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="service")
 	private Service serviceBean;
 

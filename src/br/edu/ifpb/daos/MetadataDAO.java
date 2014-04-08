@@ -20,9 +20,14 @@ public class MetadataDAO {
 	
 	public void save(Metadatarecord metadata){
 		em.getTransaction().begin();
-		em.persist(metadata);
+		em.merge(metadata);
 		//em.flush();
 		em.getTransaction().commit();
 		em.close();
 		}
+	
+	public EntityManager getPersistenceContext()  
+   {  
+      return em;  
+   }  
 }

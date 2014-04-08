@@ -1,7 +1,9 @@
 package br.edu.ifpb.entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class Service implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
 	private Timestamp begintime;
@@ -41,7 +44,7 @@ public class Service implements Serializable {
 	private List<Featuretype> featuretypes;
 
 	//bi-directional many-to-one association to Metadatarecord
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="metadatarecord")
 	private Metadatarecord metadatarecordBean;
 

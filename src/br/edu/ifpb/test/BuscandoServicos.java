@@ -49,8 +49,8 @@ public class BuscandoServicos {
 	private static String aesa ="http://geo.aesa.pb.gov.br/csw?";
 
 	public static void main(String[] args) throws MalformedURLException, URISyntaxException, IOException, JAXBException {
-		VerifyService verifica = new VerifyService(); 
-		WebMapServerLayers wmsi = new WebMapServerLayers();
+		//VerifyService verifica = new VerifyService(); 
+		//WebMapServerLayers wmsi = new WebMapServerLayers();
 		HandleMetadatas getMetadados = new HandleMetadatas();
 		
 		final MarshallerPool marshallerPool = CSWMarshallerPool.getInstance();
@@ -103,7 +103,7 @@ public class BuscandoServicos {
 				
 			response = ((JAXBElement<GetRecordsResponseType>) unmarshaller.unmarshal(is)).getValue();
 			Iterator iterator = response.getSearchResults().getAny().iterator();
-			getMetadados.setInformationFromMetadados(iterator);
+			//getMetadados.saveMetadata(listMetadados, catalog);(iterator);
 
 			}catch(Exception e){
 				//e.printStackTrace();

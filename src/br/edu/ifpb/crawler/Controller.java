@@ -1,8 +1,8 @@
 package br.edu.ifpb.crawler;
 
 import java.io.File;
-import java.util.List;
 
+import br.edu.ifpb.entidades.Metadatarecord;
 import br.edu.ifpb.servicos.TesteComOCrawler;
 import br.edu.ifpb.servicos.VerifyService;
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
@@ -10,7 +10,6 @@ import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
-import edu.uci.ics.crawler4j.url.WebURL;
 
 
 public class Controller {
@@ -19,6 +18,7 @@ public class Controller {
     private int MAX_DEPTH_OF_CRAWLING;
     private SettingsFile setting;
     private VerifyService verifyService;
+    private Metadatarecord metadata;
     
     public Controller(){
     	 //setting = new SettingsFile(new File("br/edu/ifpb/crawler/Setting.xml"));
@@ -32,7 +32,7 @@ public class Controller {
     }
 
     public void callOfCrawler(String url) throws Exception{
-
+    	System.out.println("===================CRAWLER====================");
 	    CrawlConfig config = new CrawlConfig();
 	    config.setMaxDepthOfCrawling(this.MAX_DEPTH_OF_CRAWLING);
 	    config.setCrawlStorageFolder(crawlStorageFolder);
@@ -44,15 +44,14 @@ public class Controller {
 	    CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
 	    System.out.println("URL: " + url);
 	    controller.addSeed(url+"/regional/web/");
-	   // controller.addSeed(url+"/work/");
+	    //controller.addSeed(url+"/work/");
 	    //controller.addSeed(url+"/portal/");
 	    controller.addSeed(url);
-	   // controller.addSeed(url+"/work/");
-	   // controller.addSeed(url+"/portal/");
+	    
 	    
 	    controller.start(TesteComOCrawler.class, this.NUMBER_OF_CRAWLER); 
-	    
-	    System.out.println("Sai do Crawler");
+	    System.out.println("Saida do Crawler");
+	    System.out.println("===============================================");
 	    
 	   
 	    
