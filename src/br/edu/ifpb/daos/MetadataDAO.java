@@ -8,13 +8,14 @@ import javax.persistence.PersistenceContext;
 import br.edu.ifpb.entidades.Metadatarecord;
 
 public class MetadataDAO {
-	private EntityManagerFactory emf;
-	private EntityManager em;
+	
+	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("tcc-up");;
+	private static EntityManager em = emf.createEntityManager();
 	
 	public MetadataDAO() {
-		emf = Persistence.createEntityManagerFactory("tcc-up");
-		em = emf.createEntityManager();
-		em.clear();
+//		emf = Persistence.createEntityManagerFactory("tcc-up");
+//		em = emf.createEntityManager();
+//		em.clear();
 	}
 	
 	
@@ -23,7 +24,7 @@ public class MetadataDAO {
 		em.merge(metadata);
 		//em.flush();
 		em.getTransaction().commit();
-		em.close();
+//		em.close();
 		}
 	
 	public EntityManager getPersistenceContext()  

@@ -43,7 +43,8 @@ public class TesteComOCrawler extends WebCrawler{
 	private Service service;
 	private Featuretype feature, features;
 	private Metadatarecord metadata = new Metadatarecord();
-	
+	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("tcc-up");
+	private static EntityManager em = emf.createEntityManager();
 		
 	private List<String> possiveisServiço = new ArrayList<String>();
 	
@@ -205,24 +206,24 @@ public class TesteComOCrawler extends WebCrawler{
 			em.merge(service);
 			//em.flush();
 			em.getTransaction().commit();
-			em.close();
+//			em.close();
 		
 	}
 	
 	public void saveFeature(Featuretype feature){
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("tcc-up");
-		 EntityManager em = null;
-		
-		
-			
-			em = emf.createEntityManager();
-			em.clear();
+//		EntityManagerFactory emf = Persistence.createEntityManagerFactory("tcc-up");
+//		 EntityManager em = null;
+//		
+//		
+//			
+//			em = emf.createEntityManager();
+//			em.clear();
 		
 			em.getTransaction().begin();
 			em.merge(feature);
 			//em.flush();
 			em.getTransaction().commit();
-			em.close();
+//			em.close();
 		
 	}
 	

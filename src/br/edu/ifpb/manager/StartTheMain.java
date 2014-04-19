@@ -54,30 +54,34 @@ public class StartTheMain {
 			URISyntaxException, IOException, JAXBException {
 		InformationOfCatalog informationOfCatalog = new InformationOfCatalog();
 		HandleMetadatas getMetadados = new HandleMetadatas();
-
-		final MarshallerPool marshallerPool = CSWMarshallerPool.getInstance();
-		final Unmarshaller unmarshaller = marshallerPool.acquireUnmarshaller();
-
-		// /Chamada ao catalogo de serviço de uma IDE(SDI)
-		final CatalogServicesServer cswServer = new CatalogServicesServer(
-				new URL(geoportaligm),
-				"2.0.2");
-
-		// Requisição do getCapabilities
-		final GetCapabilitiesRequest getCapa = cswServer
-				.createGetCapabilities();
-		InputStream is = getCapa.getResponseStream();
-		Capabilities capabilities = (Capabilities) unmarshaller.unmarshal(is);
-
-		// Persistindo informações do catalogo no banco de dados
-		informationOfCatalog.persistsInformationFromCatalog(capabilities,
-				cswServer);
 		
-		//Exibindo na saída os dados do catalogo persistido
-		System.out.println("==================INFORMAÇÕES DO CATÁLOGO==========================");
-		informationOfCatalog.showCatalog();
-		System.out.println("===================================================================");
-		System.out.println();
+		final MarshallerPool marshallerPool = CSWMarshallerPool.getInstance();
+		final Unmarshaller unmarshaller;
+	        
+		unmarshaller = marshallerPool.acquireUnmarshaller();
+        // /Chamada ao catalogo de serviço de uma IDE(SDI)
+	final CatalogServicesServer cswServer = new CatalogServicesServer(
+			new URL(geoportaligm),
+			"2.0.2");
+
+	// Requisição do getCapabilities
+	final GetCapabilitiesRequest getCapa = cswServer
+			.createGetCapabilities();
+	InputStream is = getCapa.getResponseStream();
+	Capabilities capabilities = (Capabilities) unmarshaller.unmarshal(is);
+
+	// Persistindo informações do catalogo no banco de dados
+	informationOfCatalog.persistsInformationFromCatalog(capabilities,
+			cswServer);
+	
+	//Exibindo na saída os dados do catalogo persistido
+	System.out.println("==================INFORMAÇÕES DO CATÁLOGO==========================");
+	informationOfCatalog.showCatalog();
+	System.out.println("===================================================================");
+	System.out.println();
+
+		
+		
 
 		//Requisicao da camada, verificar se a seri;o j[a foi persistido
 		

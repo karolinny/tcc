@@ -34,7 +34,7 @@ public class HandleMetadatas {
 	public HandleMetadatas(){
 		
 		this.metadata = new Metadatarecord();
-		
+		this.metadataDAO = new MetadataDAO();
 		this.metadataRecord = new Metadatarecord();
 		this.metadataRecordUrls = new ArrayList<Metadatarecordurl>();		
 		this.url = null;
@@ -145,7 +145,6 @@ public class HandleMetadatas {
 			System.out.println("=====================FIM DO METADADO================================");
 			System.out.println();
 			System.out.println();
-			this.metadataDAO = new MetadataDAO();
 			this.metadataDAO.save(this.getMetadata());
 			//this.saveMetadataRecordUrls(this.getMetadata().getMetadatarecordurls());
 			
